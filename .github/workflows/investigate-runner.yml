@@ -15,13 +15,31 @@ jobs:
       matrix:
         os:
           - macOS-latest
-          - ubuntu-latest
     runs-on: ${{ matrix.os }}
 
     steps:
 
-      - name: Show default R paths
+      - name: Show default R path
+        if: always()
         run: |
           type R
+
+      - name: Show default Rscript path
+        if: always()
+        run: |
           type Rscript
+
+      - name: Show default brew path
+        if: always()
+        run: |
           type brew
+
+      - name: Show brew installed packages
+        if: always()
+        run: |
+          brew list
+
+      - name: Show brew deps
+        if: always()
+        run: |
+          brew deps -tree -installed
