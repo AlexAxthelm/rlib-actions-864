@@ -1,0 +1,32 @@
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 1,2,3,4,5'
+  workflow_dispatch:
+
+name: setup R
+
+jobs:
+  simple-setup:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macOS-latest
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+          extra-repositories: ${{ inputs.extra-repositories }}
+
+      - name: Test R works
+        run: |
+          print(mtcars)
+        shell: Rscript {0}

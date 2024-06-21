@@ -1,0 +1,27 @@
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 1,2,3,4,5'
+  workflow_dispatch:
+
+name: setup R
+
+jobs:
+  investigate-runner:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macOS-latest
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+      - name: Show default R paths
+        run: |
+          type R
+          type Rscript
+          type brew
