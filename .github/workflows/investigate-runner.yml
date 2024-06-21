@@ -42,4 +42,4 @@ jobs:
       - name: Show brew deps
         if: always()
         run: |
-          brew deps -tree -installed
+          brew deps --tree --installed
